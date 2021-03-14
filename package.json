@@ -18,6 +18,7 @@
   "homepage": "https://github.com/alma-iceee/discord_bot#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "eslint": "^7.22.0"
   }
 }
