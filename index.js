@@ -2,8 +2,19 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
+const fs = require('fs');
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
+
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.name, command);
+}
 
 client.once('ready', () => {
 	console.log('Ready!');
@@ -19,7 +30,7 @@ client.on('message', message => {
 
 
 	if (command === 'ping') {
-		message.channel.send('Pong');
+		client.commands.get('ping').execute(message, args);
 	} else if (command === 'server') {
 		message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`);
 	} else if (command === 'user-info') {
