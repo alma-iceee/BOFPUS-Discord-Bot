@@ -34,11 +34,12 @@ client.on('message', message => {
 	const args = message.content.slice(process.env.PREXIF.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
-	if (!client.commands.has(commandName)) {
+	const command = client.commands.get(commandName)
+		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+	if (!command) {
 		return;
 	}
-
-	const command = client.commands.get(commandName);
 
 	if (command.args && !args.length) {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
