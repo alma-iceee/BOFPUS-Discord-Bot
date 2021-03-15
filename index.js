@@ -26,23 +26,18 @@ client.on('message', message => {
 	}
 
 	const args = message.content.slice(process.env.PREXIF.length).trim().split(/ +/);
-	const command = args.shift().toLowerCase();
+	const commandName = args.shift().toLowerCase();
 
+	if (!client.commands.has(commandName)) {
+		return;
+	}
 
-	if (command === 'ping') {
-		client.commands.get('ping').execute(message, args);
-	} else if (command === 'server') {
-		client.commands.get('server').execute(message, args);
-	} else if (command === 'user-info') {
-		client.commands.get('user-info').execute(message, args);
-	} else if (command === 'args-info') {
-		client.commands.get('args-info').execute(message, args);
-	} else if (command === 'kick') {
-		client.commands.get('kick').execute(message, args);
-	} else if (command === 'avatar') {
-		client.commands.get('avatar').execute(message, args);
-	} else if (command === 'prune') {
-		client.commands.get('prune').execute(message, args);
+	const command = client.commands.get(commandName);
+
+	try {
+		command.execute(message, args);
+	} catch (err) {
+		console.error(err);
 	}
 });
 
