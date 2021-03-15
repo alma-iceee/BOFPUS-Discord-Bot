@@ -32,48 +32,17 @@ client.on('message', message => {
 	if (command === 'ping') {
 		client.commands.get('ping').execute(message, args);
 	} else if (command === 'server') {
-		message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`);
+		client.commands.get('server').execute(message, args);
 	} else if (command === 'user-info') {
-		message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
+		client.commands.get('user-info').execute(message, args);
 	} else if (command === 'args-info') {
-		if (!args.length) {
-			return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
-		} else if (args[0] === 'foo') {
-			return message.channel.send('bar');
-		}
-
-		message.channel.send(`Command name: ${command}\nArguments: ${args}`);
+		client.commands.get('args-info').execute(message, args);
 	} else if (command === 'kick') {
-		if (!message.mentions.users.size) {
-			return message.reply('you need to tag a user in order to kick them!');
-		}
-
-		const taggedUser = message.mentions.users.first();
-
-		message.channel.send(`You wanted to kick: ${taggedUser.username}`);
+		client.commands.get('kick').execute(message, args);
 	} else if (command === 'avatar') {
-		if (!message.mentions.users.size) {
-			return message.channel.send(`Your avatar: <${message.author.displayAvatarURL({ format: "png", dynamic: true })}>`);
-		}
-
-		const avatarList = message.mentions.users.map(user => {
-			return `${user.username}'s avatar: <${user.displayAvatarURL({ format: "png", dynamic: true })}>`;
-		});
-
-		message.channel.send(avatarList);
+		client.commands.get('avatar').execute(message, args);
 	} else if (command === 'prune') {
-		const amount = parseInt(args[0]) + 1;
-
-		if (isNaN(amount)) {
-			return message.reply('that doesn\'t seem to be a valid number.');
-		} else if (amount <= 1 || amount > 10) {
-			return message.reply('you need to input a number between 1 and 9.');
-		}
-
-		message.channel.bulkDelete(amount, true).catch(err => {
-			console.error(err);
-			message.channel.send('there was an error trying to prune messages in this channel!');
-		});
+		client.commands.get('prune').execute(message, args);
 	}
 });
 
