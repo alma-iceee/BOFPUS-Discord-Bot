@@ -11,6 +11,22 @@ module.exports = {
 
 		const taggedUser = message.mentions.users.first();
 
-		message.channel.send(`You wanted to kick: ${taggedUser.username}`);
+		if (taggedUser) {
+			const member = message.guild.member(taggedUser);
+
+			if (member) {
+				member
+					.kick('You were being bad!')
+					.then(() => {
+						message.channel.send(`${taggedUser.username} is successfully  kicked`);
+					})
+					.catch(err => {
+						message.reply('I was unable to kick the member');
+						console.error(err)
+					});
+			} else {
+				message.reply("That user isn't in this guild!");
+			}
+		}
 	},
 };

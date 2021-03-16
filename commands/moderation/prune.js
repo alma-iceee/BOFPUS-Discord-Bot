@@ -9,8 +9,8 @@ module.exports = {
 
 		if (isNaN(amount)) {
 			return message.reply('that doesn\'t seem to be a valid number.');
-		} else if (amount <= 1 || amount > 10) {
-			return message.reply('you need to input a number between 1 and 9.');
+		} else if (amount <= 1 || amount > 20) {
+			return message.reply('you need to input a number between 1 and 19.');
 		}
 
 		message.channel.bulkDelete(amount, true).catch(err => {
