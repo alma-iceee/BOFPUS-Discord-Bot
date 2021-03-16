@@ -7,6 +7,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+client.cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
 
 const commandFolders = fs.readdirSync('./commands');
@@ -19,8 +20,6 @@ for (const folder of commandFolders) {
 		client.commands.set(command.name, command);
 	}
 }
-
-client.cooldowns = new Discord.Collection();
 
 client.once('ready', () => {
 	console.log('Ready!');
