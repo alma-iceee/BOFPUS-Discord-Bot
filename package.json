@@ -20,5 +20,8 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.22.0"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
