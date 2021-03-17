@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/alma-iceee/discord_bot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.4.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
+    "ffmpeg-static": "^4.2.7",
     "googleapis": "^67.1.1",
     "ytdl-core": "^4.5.0"
   }
