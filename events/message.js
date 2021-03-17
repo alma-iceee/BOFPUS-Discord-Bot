@@ -18,22 +18,13 @@ module.exports = {
 			return;
 		}
 
-		if (command.args && !args.length) {
-			let reply = `You didn't provide any arguments, ${message.author}!`;
-
-			if (command.usage) {
-				reply += `\nThe proper usage would be: \`${process.env.PREXIF}${command.name} ${command.usage}\``;
-			}
-
-			return message.channel.send(reply);
-		}
-
 		if (command.guildOnly && message.channel.type === 'dm') {
 			return message.reply('I can\'t execute that command inside DMs!');
 		}
 
 		if (command.permissions) {
 			const authorPerms = message.channel.permissionsFor(message.author);
+
 			if (!authorPerms || !authorPerms.has(command.permissions)) {
 				return message.reply('You can not do this!');
 			}
@@ -54,17 +45,29 @@ module.exports = {
 
 			if (now < expirationTime) {
 				const timeLeft = (expirationTime - now) / 1000;
-				return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+				return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the 
+					\`${command.name}\` command.`);
 			}
 		}
 
 		timestamps.set(message.author.id, now);
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
+		if (command.args && !args.length) {
+			let reply = `You didn't provide any arguments, ${message.author}!`;
+
+			if (command.usage) {
+				reply += `\nThe proper usage would be: \`${process.env.PREXIF}${command.name} ${command.usage}\``;
+			}
+
+			return message.channel.send(reply);
+		}
+
 		try {
 			command.execute(message, args);
 		} catch (error) {
 			console.error(error);
+			console.log("Can't execute command");
 		}
 	},
 };
