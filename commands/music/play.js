@@ -1,4 +1,7 @@
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const {google} = require('googleapis');
 const ytdl = require('ytdl-core');
 
@@ -10,7 +13,7 @@ module.exports = {
 		let item;
 
 		google.youtube('v3').search.list({
-			key: youtube_token,
+			key: process.env.YOUTUBE_TOKEN,
 			part: 'snippet',
 			type: 'video',
 			q: args,
