@@ -23,16 +23,12 @@ module.exports = {
 
 			console.log(data.items[0]);
 
-			data.items.forEach((item) => {
-				console.log(`Title: ${item.snippet.title}\n${item.snippet.description}\n`)
-			})
+			message.reply(`Title: ` + item.snippet.title);
 		}).catch((err) => console.log(err));
 
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
 			const url = `https://www.youtube.com/watch?v=${item.id.videoId}`;
-
-			console.log(url);
 
 			const dispatcher = ytdl(url, { filter: 'audioonly' });
 			connection.play(dispatcher);

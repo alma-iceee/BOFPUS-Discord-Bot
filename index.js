@@ -7,6 +7,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+const queue = new Map();
+
 client.cooldowns = new Discord.Collection();
 
 client.commands = new Discord.Collection();
